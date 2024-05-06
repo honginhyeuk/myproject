@@ -1,0 +1,48 @@
+<!-- comment_form.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>댓글 작성 및 목록</title>
+</head>
+<body>
+    <h2>댓글 작성</h2>
+    <form action="/comments/" method="post">
+        {% csrf_token %}  <!-- CSRF 토큰을 포함하여 CSRF 공격 방지 -->
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="content">댓글:</label><br>
+        <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="댓글 작성">
+    </form>
+    <h2>댓글 목록</h2>
+    <table border="1">  <!-- 테이블 시작 -->
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>내용</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.name }}</td>  <!-- 이름 -->
+                <td>{{ comment.content }}</td>  <!-- 내용 -->
+                <td>{{ comment.created_at }}</td>  <!-- 작성일 -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>  <!-- 테이블 종료 -->
+<!--    <ul>
+        {% for comment in comments %}
+        <li>{{ comment.name }}: {{ comment.content }} ({{ comment.created_at }})</li>
+        {% endfor %}
+    </ul>-->
+</body>
+</html>
